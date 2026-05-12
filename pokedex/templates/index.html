@@ -5,6 +5,7 @@
    <h1></h1>
             <p class="p-2">Hola, este es tu primer sitio en Django</p>
             <h3>Pokemons</h3>
+            <a href="{% url "pokedex:add_pokemon" %}">Añadir pokemon</a>
             <div class="row">
                 {% for pokemon in pokemons %}
                 <div class="col-sm-3">
@@ -14,9 +15,14 @@
                         <div class="card-body">
                           <h5 class="card-title">{{pokemon | capfirst }}</h5>
                           <p class="card-text">Altura {{ pokemon.height}} </p>
-                          <a href="{% url 'pokemon' pokemon.id %}" class="btn btn-primary">
+                          <a href="{% url 'pokedex:pokemon' pokemon.id %}" class="btn btn-primary">
                             <i class="fa-solid fa-eye"></i>
-
+                          </a>
+                          <a href="{% url 'pokedex:edit_pokemon' pokemon.id %}" class="btn btn-secondary">
+                            <i class="fa-solid fa-pencil"></i>
+                          </a>
+                            <a href="{% url 'pokedex:delete_pokemon' pokemon.id %}" class="btn btn-warning">
+                            <i class="fa-solid fa-trash"></i>
                           </a>
                         </div>
                       </div>
@@ -27,7 +33,7 @@
             <ul class="list-group">
                 {% for trainer in trainers %}
                 <li class="list-group-item">
-                    <a href="{% url 'trainer_details' trainer.id %}">{{ trainer | capfirst }}</a>
+                    <a href="{% url 'pokedex:trainer_details' trainer.id %}">{{ trainer | capfirst }}</a>
                 </li>
                 {% endfor %}
             </ul>
