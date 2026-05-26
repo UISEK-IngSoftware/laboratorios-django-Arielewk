@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% block title %}{{ pokemon | capfirst}}{% endblock title %}
 {% block content %}
+<style>
+    body {
+        background-color: #fde8e8;
+        color: #243447;
+    }
+
+    .container {
+        background-color: #fffdf7;
+        min-height: 100vh;
+        padding-bottom: 2rem;
+    }
+
+    h3 {
+        color: #b21f2d;
+    }
+
+    p,
+    li {
+        color: #243447;
+    }
+
+    .list-group-item {
+        background-color: #ffffff;
+    }
+</style>
 <p>Has elegido el pokemon: <strong>{{ pokemon | capfirst }}</strong></p>
             <h3>Detalle del Pokemon</h3>
             <ul class="list-group-item">

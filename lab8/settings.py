@@ -130,3 +130,8 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / 'media'
+
+#Path to redirect after login
+LOGIN_REDIRECT_URL = 'pokedex:index'
+LOGIN_URL = 'pokedex:login'
+LOGOUT_REDIRECT_URL = 'pokedex:index'
