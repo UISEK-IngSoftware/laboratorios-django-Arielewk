@@ -35,10 +35,12 @@ class TrainerForm(forms.ModelForm):
             'last_name': 'Apellido',
             'birth_date': 'Fecha de nacimiento',
             'level': 'Nivel',
+            'image': 'Foto',
         }
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'level': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }

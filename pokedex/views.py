@@ -50,7 +50,7 @@ def add_pokemon(request):
 @login_required
 def add_trainer(request):
     if request.method == "POST":
-        form = TrainerForm(request.POST)
+        form = TrainerForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('pokedex:index')
@@ -82,7 +82,7 @@ def delete_pokemon(request, id:int):
 def edit_trainer(request, id):
     trainer = get_object_or_404(Trainer, id=id)
     if request.method == "POST":
-        form = TrainerForm(request.POST, instance=trainer)
+        form = TrainerForm(request.POST, request.FILES, instance=trainer)
         if form.is_valid():
             form.save()
             return redirect('pokedex:index')

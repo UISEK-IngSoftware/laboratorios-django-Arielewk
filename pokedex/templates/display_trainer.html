@@ -28,6 +28,12 @@
 
             <h3>{{ trainer | capfirst }}</h3>
             
+            {% if trainer.image %}
+            <div class="mb-3">
+                <img src="{{ trainer.image.url }}" alt="{{ trainer }}" style="max-width: 300px; height: auto; border-radius: 8px;">
+            </div>
+            {% endif %}
+            
             <h3>Detalles:</h3>
             <br>
             <ul class="list-group-item">

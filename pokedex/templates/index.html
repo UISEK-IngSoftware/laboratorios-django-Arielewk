@@ -55,7 +55,11 @@
                 <div class="col-sm-3">
                     <br>
                     <div class="card" style="width: 10rem;">
+                        {% if pokemon.picture %}
                         <img class ="card-img-top" src="{{pokemon.picture.url}}" alt="Card image cap">
+                        {% else %}
+                        <img class ="card-img-top" src="https://via.placeholder.com/160x160?text=Sin+imagen" alt="Sin imagen">
+                        {% endif %}
                         <div class="card-body">
                           <h5 class="card-title">{{pokemon | capfirst }}</h5>
                           <p class="card-text">Altura {{ pokemon.height}} </p>
