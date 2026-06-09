@@ -16,6 +16,7 @@
     h3,
     h5 {
         color: #b21f2d;
+        font-weight: 700;
     }
 
     p,
@@ -37,6 +38,126 @@
     .card,
     .list-group-item {
         background-color: #ffffff;
+    }
+
+    .trainer-card {
+        border: 3px solid #b21f2d;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #f9f6f0 100%);
+        box-shadow: 0 5px 15px rgba(178, 31, 45, 0.15);
+    }
+
+    .trainer-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(178, 31, 45, 0.25);
+    }
+
+    .trainer-card-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #b21f2d, #d62828);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .trainer-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transition: transform 0.3s ease;
+        padding: 0.5rem;
+    }
+
+    .trainer-card:hover .trainer-card-image img {
+        transform: scale(1.05);
+    }
+
+    .trainer-card-image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #ffffff;
+        background: linear-gradient(135deg, #b21f2d, #d62828);
+    }
+
+    .trainer-card-body {
+        padding: 1.5rem;
+    }
+
+    .trainer-card-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #b21f2d;
+        margin-bottom: 0.8rem;
+        text-align: center;
+    }
+
+    .trainer-card-info {
+        font-size: 0.95rem;
+        color: #243447;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e0d5cc;
+    }
+
+    .trainer-card-info:last-of-type {
+        border-bottom: none;
+    }
+
+    .trainer-card-info strong {
+        color: #b21f2d;
+    }
+
+    .trainer-card-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+
+    .trainer-card-actions a {
+        flex: 1;
+        padding: 0.6rem;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: #ffffff;
+        transition: all 0.3s ease;
+    }
+
+    .trainer-card-actions .btn-view {
+        background-color: #007bff;
+    }
+
+    .trainer-card-actions .btn-view:hover {
+        background-color: #0056b3;
+    }
+
+    .trainer-card-actions .btn-edit {
+        background-color: #6c757d;
+    }
+
+    .trainer-card-actions .btn-edit:hover {
+        background-color: #5a6268;
+    }
+
+    .trainer-card-actions .btn-delete {
+        background-color: #dc3545;
+    }
+
+    .trainer-card-actions .btn-delete:hover {
+        background-color: #c82333;
     }
 </style>
 <div>
@@ -78,27 +199,58 @@
                 {% endfor %}
             </div>
 
-            <h3 class="mt-4">Entrenadores</h3>
+            <h3 class="mt-4">👥 Entrenadores</h3>
             {% if user.is_authenticated %}
                 <a href="{% url 'pokedex:add_trainer' %}" class="btn btn-success mb-3" role="button">
                     <i class="fa-solid fa-plus"></i> Añadir Entrenador
                 </a>
             {% endif %}
-            <ul class="list-group mb-4">
+            
+            <div class="row">
                 {% for trainer in trainers %}
-                <li class="list-group-item">
-                    <a href="{% url 'pokedex:trainer_details' trainer.id %}">{{ trainer | capfirst }}</a>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'pokedex:edit_trainer' trainer.id %}" class="btn btn-secondary btn-sm ms-2">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
-                        <a href="{% url 'pokedex:delete_trainer' trainer.id %}" class="btn btn-warning btn-sm">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    {% endif %}
-                </li>
+                <div class="col-sm-4 mb-4">
+                    <div class="trainer-card">
+                        <div class="trainer-card-image">
+                            {% if trainer.image %}
+                                <img src="{{ trainer.image.url }}" alt="{{ trainer }}">
+                            {% else %}
+                                <div class="trainer-card-image-placeholder">👤</div>
+                            {% endif %}
+                        </div>
+                        <div class="trainer-card-body">
+                            <div class="trainer-card-title">{{ trainer | capfirst }}</div>
+                            <div class="trainer-card-info">
+                                <span><strong>Nivel:</strong></span>
+                                <span>{{ trainer.level }}</span>
+                            </div>
+                            <div class="trainer-card-info">
+                                <span><strong>Nac.:</strong></span>
+                                <span>{{ trainer.birth_date }}</span>
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div class="trainer-card-actions">
+                                <a href="{% url 'pokedex:trainer_details' trainer.id %}" class="btn-view" title="Ver detalles">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a href="{% url 'pokedex:edit_trainer' trainer.id %}" class="btn-edit" title="Editar">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
+                                <a href="{% url 'pokedex:delete_trainer' trainer.id %}" class="btn-delete" title="Eliminar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="trainer-card-actions">
+                                <a href="{% url 'pokedex:trainer_details' trainer.id %}" class="btn-view" title="Ver detalles" style="flex: 0 0 100%;">
+                                    <i class="fa-solid fa-eye"></i> Ver
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
 </div>
 {% endblock content %}
 
