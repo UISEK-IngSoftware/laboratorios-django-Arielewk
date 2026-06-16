@@ -44,6 +44,8 @@
         margin: 0;
         font-weight: 700;
         text-transform: capitalize;
+        color: #FDD835;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .trainer-content {
@@ -150,7 +152,7 @@
 </style>
 
 <div class="trainer-header">
-    <h1>👤 {{ trainer | capfirst }}</h1>
+    <h1>{{ trainer | capfirst }}</h1>
 </div>
 
 <div class="trainer-content">
@@ -161,14 +163,14 @@
     {% endif %}
     
     <div>
-        <h3>📋 Detalles:</h3>
+        <h3>Detalles</h3>
         <div class="trainer-details">
             <div class="detail-item">
-                <span class="detail-label">⭐ Nivel:</span>
+                <span class="detail-label">Nivel:</span>
                 <span class="detail-value">{{trainer.level}}</span>
             </div>
             <div class="detail-item">
-                <span class="detail-label">🎂 Fecha de Nacimiento:</span>
+                <span class="detail-label">Fecha de Nacimiento:</span>
                 <span class="detail-value">{{trainer.birth_date}}</span>
             </div>
         </div>
