@@ -1,24 +1,34 @@
+from rest_framework import permissions
 from rest_framework import viewsets
 from pokedex.models import Pokemon, Trainer
-from .serializers import PokemonSerializer, TrainerSerializer
-from oauth2_provider.contrib.rest_framework import OAuth2Authentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from .serializers import ( PokemonSerializer,TrainerSerializer,)
+
 
 class PokemonViewSet(viewsets.ModelViewSet):
-    queryset = Pokemon.objects.all()
-    serializer_class = PokemonSerializer    
+    queryset = Pokemon.objects.all().order_by('id')
+    serializer_class = PokemonSerializer
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [
+                permissions.AllowAny,
+            ]
+        else:
+            permission_classes = [
+                permissions.IsAuthenticated,
+            ]
+
+        return [
+            permission()
+            for permission in permission_classes
+        ]
+
 
 class TrainerViewSet(viewsets.ModelViewSet):
-    queryset = Trainer.objects.all()
+    queryset = Trainer.objects.all().order_by('id')
     serializer_class = TrainerSerializer
 
-    authentication_classes = [OAuth2Authentication]
-    required_scopes = ['read']
-    
-    def get_permissions(self):
-        if self.request.method in ['POST', 'PUT', 'PATCH', 'DELETE']:
-            return [IsAuthenticated()]
-        return [AllowAny()]
-
- 
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
 
